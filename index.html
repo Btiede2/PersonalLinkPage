@@ -1,0 +1,204 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>Home Server — Links</title>
+<meta name="description" content="A small index of links to services running on the home server." />
+
+<link rel="manifest" href="manifest.json" />
+<meta name="theme-color" content="#E7E2D3" />
+<link rel="icon" href="icons/icon-192.png" />
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="default" />
+<meta name="apple-mobile-web-app-title" content="Links" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --paper: #E7E2D3;
+    --paper-raised: #EDE8DA;
+    --ink: #24291F;
+    --ink-soft: #565b4f;
+    --rule: #B9AF98;
+    --clay: #9C4A32;
+    --moss: #55624A;
+    --max-w: 460px;
+  }
+
+  * { box-sizing: border-box; }
+
+  html, body {
+    margin: 0;
+    padding: 0;
+    background: var(--paper);
+    color: var(--ink);
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  body {
+    font-family: "IBM Plex Mono", ui-monospace, Menlo, monospace;
+    min-height: 100vh;
+    min-height: 100dvh;
+    display: flex;
+    justify-content: center;
+    padding: max(32px, env(safe-area-inset-top)) 20px max(32px, env(safe-area-inset-bottom));
+  }
+
+  main {
+    width: 100%;
+    max-width: var(--max-w);
+  }
+
+  header {
+    margin-bottom: 40px;
+  }
+
+  .tag {
+    font-size: 12px;
+    letter-spacing: 0.02em;
+    color: var(--ink-soft);
+    margin: 0 0 10px;
+  }
+
+  h1 {
+    font-family: "Fraunces", Georgia, serif;
+    font-optical-sizing: auto;
+    font-weight: 500;
+    font-size: clamp(30px, 8vw, 40px);
+    line-height: 1.1;
+    margin: 0 0 12px;
+    letter-spacing: -0.01em;
+  }
+
+  p.blurb {
+    font-size: 13px;
+    line-height: 1.6;
+    color: var(--ink-soft);
+    margin: 0;
+    max-width: 40ch;
+  }
+
+  .index {
+    border-top: 1px solid var(--rule);
+  }
+
+  .entry {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .entry-inner {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 18px 4px;
+    transition: transform 120ms ease, opacity 120ms ease;
+  }
+
+  .entry:active .entry-inner {
+    transform: translateX(2px);
+    opacity: 0.7;
+  }
+
+  .entry-name {
+    font-family: "Fraunces", Georgia, serif;
+    font-weight: 500;
+    font-size: 19px;
+    letter-spacing: -0.005em;
+  }
+
+  .entry-path {
+    font-size: 12px;
+    color: var(--ink-soft);
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .entry:nth-of-type(1) .entry-path { color: var(--clay); }
+  .entry:nth-of-type(2) .entry-path { color: var(--moss); }
+
+  footer {
+    margin-top: 40px;
+    font-size: 11px;
+    color: var(--ink-soft);
+    line-height: 1.6;
+  }
+
+  footer code {
+    background: var(--paper-raised);
+    padding: 1px 5px;
+    border-radius: 3px;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --paper: #1C1E17;
+      --paper-raised: #24261D;
+      --ink: #EDE8DA;
+      --ink-soft: #9B9583;
+      --rule: #3A3B30;
+    }
+  }
+</style>
+</head>
+<body>
+<main>
+  <header>
+    <p class="tag">a small index</p>
+    <h1>Home&nbsp;Server</h1>
+    <p class="blurb">Everything running on the box, one tap away.</p>
+  </header>
+
+  <nav class="index" id="link-index" aria-label="Personal links">
+    <!-- populated by script from LINKS below -->
+  </nav>
+
+  <footer>
+    Edit the <code>LINKS</code> array near the bottom of <code>index.html</code>
+    to add your own name and links.
+  </footer>
+</main>
+
+<script>
+  // Edit this list — order here is the order shown on the page.
+  const LINKS = [
+    { name: "Audiobookshelf", path: "./listen", url: "http://tiedehome.tplinkdns.com:13378" },
+    { name: "Plex",           path: "./watch",  url: "http://tiedehome.tplinkdns.com:32400" },
+    { name: "Calibre",        path: "./read",   url: "http://tiedehome.tplinkdns.com:8081" },
+    { name: "Crosswatch",     path: "./track",  url: "http://tiedehome.tplinkdns.com:8787" },
+  ];
+
+  const nav = document.getElementById("link-index");
+  LINKS.forEach(link => {
+    const a = document.createElement("a");
+    a.className = "entry";
+    a.href = link.url;
+    if (!link.url.startsWith("mailto:")) {
+      a.target = "_blank";
+      a.rel = "noopener noreferrer";
+    }
+    a.innerHTML = `
+      <span class="entry-inner">
+        <span class="entry-name">${link.name}</span>
+        <span class="entry-path">${link.path}</span>
+      </span>
+    `;
+    nav.appendChild(a);
+  });
+
+  if ("serviceWorker" in navigator) {
+    window.addEventListener("load", () => {
+      navigator.serviceWorker.register("service-worker.js").catch(() => {});
+    });
+  }
+</script>
+</body>
+</html>
